@@ -5,7 +5,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositoryes.StudentRepository;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class StudentServiceIml implements StudentService{
@@ -19,20 +19,27 @@ public class StudentServiceIml implements StudentService{
 
     //create
     public Student createStudent(Student student) {
+        if (findStudent(student.getId()).isPresent()) {
+            return null;
+        }
         return studentRepository.save(student);
     }
 
     //find
-    public Student findStudent(long id) {
-        return studentRepository.findById(id).get();
+    public Optional<Student> findStudent(long id) {
+        if (studentRepository.findById(id).isPresent()) {
+            return Optional.of(studentRepository.findById(id).get());
+        }
+        return Optional.empty();
     }
 
     //edit
     public Student editStudent(Student student) {
-        return studentRepository.save(student);
+        if (findStudent(student.getId()).isPresent()) {
+            return studentRepository.save(student);
+        }
+        return null;
     }
-
-
 
     //delete
     public void deleteStudent(long id) {
@@ -41,12 +48,9 @@ public class StudentServiceIml implements StudentService{
     public Collection<Student> getStudent() {
         return studentRepository.findAll();
     }
-    //findByAge
+
     public Collection<Student> getStudentByAge(int age) {
-        return studentRepository.findAll().stream()
-                .filter(student -> student
-                        .getAge() == age)
-                .collect(Collectors.toList());
+        return studentRepository.findByAge(age);
     }
 }
 

@@ -3,11 +3,12 @@ package ru.hogwarts.school.service;
 import ru.hogwarts.school.model.Faculty;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface FacultyService {
     Faculty createFaculty(Faculty faculty);
 
-    Faculty findFaculty(long id);
+    Optional<Faculty> findFaculty(long id);
 
     Faculty editFaculty(Faculty faculty);
 

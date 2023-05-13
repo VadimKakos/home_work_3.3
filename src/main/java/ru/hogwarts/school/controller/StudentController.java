@@ -7,6 +7,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/student")
@@ -18,26 +19,29 @@ public class StudentController {
      }
 
      @GetMapping("{id}")
-     public ResponseEntity<Student> findStudent(@PathVariable long id) {
-         Student student = studentService.findStudent(id);
-         if (student == null) {
-             return ResponseEntity.notFound().build();
+     public ResponseEntity<Optional<Student>> findStudent(@PathVariable long id) {
+         Optional<Student> student = studentService.findStudent(id);
+         if (student.isPresent()) {
+             return ResponseEntity.ok(student);
          }
-         return ResponseEntity.ok(student);
+         return ResponseEntity.notFound().build();
      }
 
      @GetMapping
      public ResponseEntity<Collection<Student>> getStudent() {
          return ResponseEntity.ok(studentService.getStudent());
      }
-     @GetMapping("/age{age}")
-     public Collection<Student> getStudentByAge(@PathVariable int age) {
+     @GetMapping("/age")
+     public Collection<Student> getStudentByAge(@RequestBody int age) {
          return studentService.getStudentByAge(age);
      }
 
      @PostMapping
-     public Student createStudent(@RequestBody Student student) {
-         return studentService.createStudent(student);
+     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
+         if (studentService.createStudent(student) == null) {
+             return ResponseEntity.notFound().build();
+         }
+         return ResponseEntity.ok(student);
      }
 
      @PutMapping

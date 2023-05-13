@@ -5,8 +5,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repositoryes.FacultyRepository;
 
 import java.util.Collection;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class FacultyServiceIml implements FacultyService{
@@ -17,17 +16,27 @@ public class FacultyServiceIml implements FacultyService{
     }
     //create
     public Faculty createFaculty(Faculty faculty) {
+        if (findFaculty(faculty.getId()).isPresent()) {
+            return null;
+        }
         return facultyRepository.save(faculty);
     }
 
     //find
-    public Faculty findFaculty(long id) {
-        return facultyRepository.findById(id).get();
+    public Optional<Faculty> findFaculty(long id) {
+        if (facultyRepository.findById(id).isPresent()) {
+            return Optional.of(facultyRepository.findById(id).get());
+        }
+        return Optional.empty();
     }
+
 
     //edit
     public Faculty editFaculty(Faculty faculty) {
-        return facultyRepository.save(faculty);
+        if (findFaculty(faculty.getId()).isPresent()) {
+            return facultyRepository.save(faculty);
+        }
+        return null;
     }
     //delete
     public void deleteFaculty(long id) {
@@ -39,10 +48,7 @@ public class FacultyServiceIml implements FacultyService{
     }
     //findByColor
     public Collection<Faculty> getFacultyByColor(String color) {
-        return facultyRepository.findAll().stream()
-                .filter(faculty -> Objects.equals(faculty
-                        .getColor(), color))
-                .collect(Collectors.toList());
+        return facultyRepository.findByColor(color);
     }
 }
 

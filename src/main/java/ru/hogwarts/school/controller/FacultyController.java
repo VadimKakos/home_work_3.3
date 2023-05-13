@@ -7,6 +7,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/faculty")
@@ -18,14 +19,14 @@ public class FacultyController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Faculty> findFaculty(@PathVariable long id) {
-        Faculty faculty = facultyService.findFaculty(id);
-        if (faculty == null) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<Optional<Faculty>> findFaculty(@PathVariable long id) {
+        Optional<Faculty> faculty = facultyService.findFaculty(id);
+        if (faculty.isPresent()) {
+            return ResponseEntity.ok(faculty);
         }
-        return ResponseEntity.ok(faculty);
-
+        return ResponseEntity.notFound().build();
     }
+
 
     @GetMapping
     public Collection<Faculty> getFaculty() {
@@ -37,8 +38,11 @@ public class FacultyController {
     }
 
     @PostMapping
-    public Faculty createFaculty(@RequestBody Faculty faculty) {
-        return facultyService.createFaculty(faculty);
+    public ResponseEntity<Faculty> createFaculty(@RequestBody Faculty faculty) {
+        if (facultyService.createFaculty(faculty) == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(faculty);
     }
 
     @PutMapping
@@ -47,7 +51,7 @@ public class FacultyController {
         if (editsFaculty == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(editsFaculty);
+        return ResponseEntity.ok(faculty);
     }
 
     @DeleteMapping("{id}")
