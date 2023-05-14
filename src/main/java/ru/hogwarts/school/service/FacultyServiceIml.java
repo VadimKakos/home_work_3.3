@@ -44,6 +44,18 @@ public class FacultyServiceIml implements FacultyService{
     public Collection<Faculty> getFaculty() {
         return facultyRepository.findAll();
     }
+
+    @Override
+    public Collection<Faculty> findByNameOrColor(String name, String color) {
+        return facultyRepository.findByNameOrColorIgnoreCase(name, color);
+    }
+
+    //findByName
+    @Override
+    public Collection<Faculty> findByName(String name) {
+        return facultyRepository.findByName(name);
+    }
+
     //findByColor
     public Collection<Faculty> getFacultyByColor(String color) {
         return facultyRepository.findByColor(color);

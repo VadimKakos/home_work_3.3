@@ -34,6 +34,7 @@ public class FacultyController {
     public ResponseEntity<Collection<Faculty>> getFaculty() {
         return ResponseEntity.ok(facultyService.getFaculty());
     }
+
     //getByColor
     @GetMapping("/color")
     public Collection<Faculty> getFacultyByColor(@RequestParam String color) {
@@ -67,4 +68,22 @@ public class FacultyController {
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
     }
+
+    //getWithNameOrColor
+    @GetMapping("/getBy")
+    public ResponseEntity<Collection<Faculty>> findFaculty(@RequestParam(required = false) String name,
+                                                           @RequestParam(required = false) String color) {
+        if (name != null && !name.isEmpty()&& color != null && !color.isEmpty()) {
+            return ResponseEntity.ok(facultyService.findByNameOrColor(name, color));
+        }
+        if (name != null && !name.isEmpty()) {
+            return ResponseEntity.ok(facultyService.findByName(name));
+        }
+        if (color != null && !color.isEmpty()) {
+            return ResponseEntity.ok(facultyService.getFacultyByColor(color));
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }
+
+
