@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
@@ -18,6 +19,7 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
+    //find
     @GetMapping("{id}")
     public ResponseEntity<Optional<Faculty>> findFaculty(@PathVariable long id) {
         Optional<Faculty> faculty = facultyService.findFaculty(id);
@@ -28,22 +30,28 @@ public class FacultyController {
     }
 
 
+    //get
     @GetMapping
-    public Collection<Faculty> getFaculty() {
-        return facultyService.getFaculty();
+    public ResponseEntity<Collection<Faculty>> getFaculty() {
+        return ResponseEntity.ok(facultyService.getFaculty());
     }
-    @GetMapping("/color{color}")
-    public Collection<Faculty> getFacultyByColor(@PathVariable String color) {
+    //getByColor
+    @GetMapping("/color")
+    public Collection<Faculty> getFacultyByColor(@RequestParam String color) {
         return facultyService.getFacultyByColor(color);
     }
 
+    //crete
+
     @PostMapping
     public ResponseEntity<Faculty> createFaculty(@RequestBody Faculty faculty) {
-        if (facultyService.createFaculty(faculty) == null) {
-            return ResponseEntity.notFound().build();
+        Faculty createFaculty = facultyService.createFaculty(faculty);
+        if (createFaculty == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(faculty);
+        return ResponseEntity.ok(createFaculty);
     }
+    //edit
 
     @PutMapping
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
@@ -53,6 +61,7 @@ public class FacultyController {
         }
         return ResponseEntity.ok(faculty);
     }
+    //delete
 
     @DeleteMapping("{id}")
     public ResponseEntity<Faculty> deleteFaculty(@PathVariable long id) {

@@ -16,32 +16,30 @@ public class FacultyServiceIml implements FacultyService{
     }
     //create
     public Faculty createFaculty(Faculty faculty) {
-        if (findFaculty(faculty.getId()).isPresent()) {
-            return null;
+        if (findFaculty(faculty.getId()).isEmpty()) {
+            return facultyRepository.save(faculty);
         }
-        return facultyRepository.save(faculty);
+        return null;
     }
 
     //find
     public Optional<Faculty> findFaculty(long id) {
-        if (facultyRepository.findById(id).isPresent()) {
-            return Optional.of(facultyRepository.findById(id).get());
-        }
-        return Optional.empty();
+        return facultyRepository.findById(id);
     }
 
 
     //edit
     public Faculty editFaculty(Faculty faculty) {
-        if (findFaculty(faculty.getId()).isPresent()) {
-            return facultyRepository.save(faculty);
+        if (findFaculty(faculty.getId()).isEmpty()) {
+            return null;
         }
-        return null;
+        return facultyRepository.save(faculty);
     }
     //delete
     public void deleteFaculty(long id) {
         facultyRepository.deleteById(id);
     }
+    //getAll
 
     public Collection<Faculty> getFaculty() {
         return facultyRepository.findAll();

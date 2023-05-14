@@ -19,39 +19,40 @@ public class StudentServiceIml implements StudentService{
 
     //create
     public Student createStudent(Student student) {
-        if (findStudent(student.getId()).isPresent()) {
-            return null;
+        if (findStudent(student.getId()).isEmpty()) {
+            return studentRepository.save(student);
         }
-        return studentRepository.save(student);
+        return null;
     }
 
     //find
     public Optional<Student> findStudent(long id) {
-        if (studentRepository.findById(id).isPresent()) {
-            return Optional.of(studentRepository.findById(id).get());
-        }
-        return Optional.empty();
+        return studentRepository.findById(id);
     }
 
     //edit
     public Student editStudent(Student student) {
-        if (findStudent(student.getId()).isPresent()) {
-            return studentRepository.save(student);
+        if (findStudent(student.getId()).isEmpty()) {
+            return null;
         }
-        return null;
+        return studentRepository.save(student);
     }
 
     //delete
     public void deleteStudent(long id) {
         studentRepository.deleteById(id);
     }
+    //getAll
     public Collection<Student> getStudent() {
         return studentRepository.findAll();
     }
 
+    //findByAge
     public Collection<Student> getStudentByAge(int age) {
         return studentRepository.findByAge(age);
     }
+
+
 }
 
 
