@@ -19,4 +19,5 @@ public interface StudentService {
 
     Collection<Student> getStudent();
 
+    Collection<Student> findStudentsInBetween(int from, int to);
 }

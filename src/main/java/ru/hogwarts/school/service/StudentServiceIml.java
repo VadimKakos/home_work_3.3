@@ -47,6 +47,12 @@ public class StudentServiceIml implements StudentService{
         return studentRepository.findAll();
     }
 
+    //findByBetween
+    @Override
+    public Collection<Student> findStudentsInBetween(int from, int to) {
+        return studentRepository.findByAgeBetween(from, to);
+    }
+
     //findByAge
     public Collection<Student> getStudentByAge(int age) {
         return studentRepository.findByAge(age);

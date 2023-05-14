@@ -12,35 +12,35 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/student")
 public class StudentController {
-     private final StudentService studentService;
+    private final StudentService studentService;
 
-     public StudentController(StudentService studentService) {
-         this.studentService = studentService;
-     }
-
-
-     //find
-     @GetMapping("{id}")
-     public ResponseEntity<Optional<Student>> findStudent(@PathVariable long id) {
-         Optional<Student> student = studentService.findStudent(id);
-         if (student.isPresent()) {
-             return ResponseEntity.ok(student);
-         }
-         return ResponseEntity.notFound().build();
-     }
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
 
-     //get
-     @GetMapping
-     public ResponseEntity<Collection<Student>> getStudent() {
-         return ResponseEntity.ok(studentService.getStudent());
-     }
+    //find
+    @GetMapping("{id}")
+    public ResponseEntity<Optional<Student>> findStudent(@PathVariable long id) {
+        Optional<Student> student = studentService.findStudent(id);
+        if (student.isPresent()) {
+            return ResponseEntity.ok(student);
+        }
+        return ResponseEntity.notFound().build();
+    }
 
-     //getByAge
-     @GetMapping("/age")
-     public Collection<Student> getStudentByAge(@RequestParam int age) {
-         return studentService.getStudentByAge(age);
-     }
+
+    //get
+    @GetMapping
+    public ResponseEntity<Collection<Student>> getStudent() {
+        return ResponseEntity.ok(studentService.getStudent());
+    }
+
+    //getByAge
+    @GetMapping("/age")
+    public Collection<Student> getStudentByAge(@RequestParam int age) {
+        return studentService.getStudentByAge(age);
+    }
 
 
     //create
@@ -54,19 +54,25 @@ public class StudentController {
     }
 
     //edit
-     @PutMapping
-     public ResponseEntity<Student> editStudent(@RequestBody Student student) {
-         Student editsStudent = studentService.editStudent(student);
-         if (editsStudent == null) {
-             return ResponseEntity.notFound().build();
-         }
-         return ResponseEntity.ok(student);
-     }
+    @PutMapping
+    public ResponseEntity<Student> editStudent(@RequestBody Student student) {
+        Student editsStudent = studentService.editStudent(student);
+        if (editsStudent == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(student);
+    }
 
-     //delete
-     @DeleteMapping("{id}")
-     public ResponseEntity<Student> deleteStudent(@PathVariable long id) {
-         studentService.deleteStudent(id);
-         return ResponseEntity.ok().build();
-     }
+    //delete
+    @DeleteMapping("{id}")
+    public ResponseEntity<Student> deleteStudent(@PathVariable long id) {
+        studentService.deleteStudent(id);
+        return ResponseEntity.ok().build();
+    }
+
+    //findBetween
+    @GetMapping("between")
+    public Collection<Student> findStudentsInBetween(@RequestParam int from, @RequestParam int to) {
+        return studentService.findStudentsInBetween(from, to);
+    }
 }
