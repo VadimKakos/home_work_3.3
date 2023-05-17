@@ -1,7 +1,7 @@
 package ru.hogwarts.school.service;
 
-import org.springframework.http.ResponseEntity;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -19,7 +19,9 @@ public interface FacultyService {
 
     Collection<Faculty> getFaculty();
 
-     Collection<Faculty> findByNameOrColor(String name, String color);
+    Collection<Faculty> findByNameOrColor(String nameOrColor);
 
     Collection<Faculty> findByName(String name);
+
+    Collection<Student> findStudentsOfFaculty(long id);
 }

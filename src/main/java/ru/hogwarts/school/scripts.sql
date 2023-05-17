@@ -16,4 +16,4 @@ where age<student.id;
 
 select name
 from student
-order by age
+where age between 2 and 30;
