@@ -73,10 +73,8 @@ public class FacultyController {
     //getWithNameOrColor
     @GetMapping("/getBy")
     public ResponseEntity<Collection<Faculty>> findFaculty(@RequestParam String colorOrName) {
-        if (colorOrName != null && !colorOrName.isEmpty()) {
-            return ResponseEntity.ok(facultyService.findByNameOrColor(colorOrName));
-        }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(facultyService.findByNameOrColor(colorOrName));
+
     }
     @GetMapping("/{id}/students")
     public Collection<Student> studentsOfFaculty(@PathVariable long id) {

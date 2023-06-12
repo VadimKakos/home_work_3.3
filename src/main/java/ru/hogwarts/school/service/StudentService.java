@@ -23,4 +23,8 @@ public interface StudentService {
     Collection<Student> findStudentsInBetween(int from, int to);
 
     Faculty findFacultyOfStudent(long id);
+
+    Integer getAmountStudentInSchool();
+
+    Integer getAverageAgeStudents();
 }

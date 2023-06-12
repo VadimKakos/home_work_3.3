@@ -60,9 +60,7 @@ public class FacultyServiceIml implements FacultyService{
     //studentsOfFaculty
     @Override
     public Collection<Student> findStudentsOfFaculty(long id) {
-        Faculty faculty = new Faculty();
-        faculty = facultyRepository.findFacultiesById(id);
-        return faculty.getStudents();
+        return facultyRepository.findFacultiesById(id).getStudents();
     }
 
     //findByColor

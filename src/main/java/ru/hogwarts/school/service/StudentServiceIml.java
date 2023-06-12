@@ -57,9 +57,7 @@ public class StudentServiceIml implements StudentService{
     //findFacultyOfStudent
     @Override
     public Faculty findFacultyOfStudent(long id) {
-        Student student = new Student();
-        student = studentRepository.findStudentById(id);
-        return student.getFaculty();
+        return studentRepository.findStudentById(id).getFaculty();
     }
 
     //findByAge
@@ -67,6 +65,12 @@ public class StudentServiceIml implements StudentService{
         return studentRepository.findByAge(age);
     }
 
+    public Integer getAmountStudentInSchool() {
+        return studentRepository.getAmountStudentInSchool();
+    }
+    public Integer getAverageAgeStudents() {
+        return studentRepository.getAverageAgeStudents();
+    }
 
 }
 
