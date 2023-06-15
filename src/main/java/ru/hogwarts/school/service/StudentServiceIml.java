@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
@@ -18,23 +20,29 @@ public class StudentServiceIml implements StudentService{
         this.studentRepository = studentRepository;
     }
 
+    Logger logger = LoggerFactory.getLogger(StudentServiceIml.class);
 
     //create
     public Student createStudent(Student student) {
+        logger.debug("Was invoked method for create student");
         if (findStudent(student.getId()).isEmpty()) {
             return studentRepository.save(student);
         }
         return null;
     }
 
+
     //find
     public Optional<Student> findStudent(long id) {
+        logger.debug("Was invoked method for find student with id:{}", id);
         return studentRepository.findById(id);
     }
 
     //edit
     public Student editStudent(Student student) {
+        logger.debug("Was invoked method for edit student");
         if (findStudent(student.getId()).isEmpty()) {
+            logger.warn("student not found");
             return null;
         }
         return studentRepository.save(student);
@@ -42,39 +50,47 @@ public class StudentServiceIml implements StudentService{
 
     //delete
     public void deleteStudent(long id) {
+        logger.debug("Was invoked method for delete student by id:{}", id);
         studentRepository.deleteById(id);
     }
     //getAll
     public Collection<Student> getStudent() {
+        logger.debug("Was invoked method for get all student");
         return studentRepository.findAll();
     }
 
     //findByBetween
     @Override
     public Collection<Student> findStudentsInBetween(int from, int to) {
+        logger.debug("Was invoked method for find student in between from{} to {}", from, to);
         return studentRepository.findByAgeBetween(from, to);
     }
 
     //findFacultyOfStudent
     @Override
     public Faculty findFacultyOfStudent(long id) {
+        logger.debug("Was invoked method for find faculty of student with id{}", id);
         return studentRepository.findStudentById(id).getFaculty();
     }
 
     //findByAge
     public Collection<Student> getStudentByAge(int age) {
+        logger.debug("Was invoked method for find student by age{}", age);
         return studentRepository.findByAge(age);
     }
 
     public Integer getAmountStudentInSchool() {
+        logger.debug("Was invoked method for get amount student in school");
         return studentRepository.getAmountStudentInSchool();
     }
 
     public Double getAverageAgeStudents() {
+        logger.debug("Was invoked method for get average age student");
         return studentRepository.getAverageAgeStudents();
     }
 
     public List<Student> getLastFiveStudents() {
+        logger.debug("Was invoked method for get last five student");
         return studentRepository.getLastFiveStudents();
     }
 
