@@ -20,7 +20,7 @@ public class StudentServiceIml implements StudentService{
         this.studentRepository = studentRepository;
     }
 
-    Logger logger = LoggerFactory.getLogger(StudentServiceIml.class);
+    private final Logger logger = LoggerFactory.getLogger(StudentServiceIml.class);
 
     //create
     public Student createStudent(Student student) {

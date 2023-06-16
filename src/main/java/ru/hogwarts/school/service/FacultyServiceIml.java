@@ -18,7 +18,7 @@ public class FacultyServiceIml implements FacultyService{
         this.facultyRepository = facultyRepository;
     }
 
-    Logger logger = LoggerFactory.getLogger(FacultyServiceIml.class);
+    private final Logger logger = LoggerFactory.getLogger(FacultyServiceIml.class);
     //create
     public Faculty createFaculty(Faculty faculty) {
         logger.debug("Was invoked method for create faculty");

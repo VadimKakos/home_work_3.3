@@ -8,8 +8,11 @@ import ru.hogwarts.school.service.PortService;
 @RestController
 public class InfoController {
 
-    @Autowired
-    private PortService portService;
+    private final PortService portService;
+
+    public InfoController(PortService portService) {
+        this.portService = portService;
+    }
 
     @GetMapping("/getPort")
     public String getPort() {

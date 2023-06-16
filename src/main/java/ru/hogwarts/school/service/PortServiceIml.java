@@ -5,12 +5,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
-@Profile("prod")
 public class PortServiceIml implements PortService{
 
-    @Value("${server.port}")
+    @Value("8080")
     private String port;
-
+    @Override
     public String getPort() {
         return port;
     }
