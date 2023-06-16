@@ -18,4 +18,9 @@ public class InfoController {
     public String getPort() {
         return portService.getPort();
     }
+
+    @GetMapping("/sum")
+    public Integer sum() {
+        return portService.sum();
+    }
 }

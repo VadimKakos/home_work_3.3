@@ -8,6 +8,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositoryes.FacultyRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Optional;
 
 @Service
@@ -74,6 +75,12 @@ public class FacultyServiceIml implements FacultyService{
     public Collection<Student> findStudentsOfFaculty(long id) {
         logger.debug("Was invoked method for find student with id {} of faculty", id);
         return facultyRepository.findFacultiesById(id).getStudents();
+    }
+
+    @Override
+    public String getLongestFacultyName() {
+        return facultyRepository.findAll().stream().max(Comparator.comparingLong(e -> e.getName().length())).
+                map(Faculty::getName).orElseThrow();
     }
 
     //findByColor

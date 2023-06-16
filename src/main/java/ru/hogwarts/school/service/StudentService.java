@@ -30,4 +30,8 @@ public interface StudentService {
     Double getAverageAgeStudents();
 
     List<Student> getLastFiveStudents();
+
+    List<String> findStudentBeginWithLetterA();
+
+    double getAverageAge();
 }

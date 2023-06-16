@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class StudentServiceIml implements StudentService{
+public class StudentServiceIml implements StudentService {
 
     private final StudentRepository studentRepository;
 
@@ -53,6 +53,7 @@ public class StudentServiceIml implements StudentService{
         logger.debug("Was invoked method for delete student by id:{}", id);
         studentRepository.deleteById(id);
     }
+
     //getAll
     public Collection<Student> getStudent() {
         logger.debug("Was invoked method for get all student");
@@ -92,6 +93,19 @@ public class StudentServiceIml implements StudentService{
     public List<Student> getLastFiveStudents() {
         logger.debug("Was invoked method for get last five student");
         return studentRepository.getLastFiveStudents();
+    }
+
+    @Override
+    public List<String> findStudentBeginWithLetterA() {
+         return studentRepository.
+                 findAll().stream().map(e->e.getName().toUpperCase()).
+                 filter(e -> e.charAt(0) == "А".charAt(0)).toList();
+    }
+
+    @Override
+    public double getAverageAge() {
+        return studentRepository.
+                findAll().stream().mapToInt(Student::getAge).average().orElseThrow();
     }
 
 }

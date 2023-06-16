@@ -8,6 +8,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -76,9 +77,21 @@ public class StudentController {
     public Collection<Student> findStudentsInBetween(@RequestParam int from, @RequestParam int to) {
         return studentService.findStudentsInBetween(from, to);
     }
+
     //studentsFaculty
     @GetMapping("/{id}/faculty")
     public Faculty findStudentsFaculty(@PathVariable long id) {
         return studentService.findFacultyOfStudent(id);
+    }
+
+    //A students
+    @GetMapping("/withLetterA")
+    public List<String> findStudentBeginWithLetterA() {
+        return studentService.findStudentBeginWithLetterA();
+    }
+    //averageAge streams
+    @GetMapping("/averageAge")
+    public Double getAverageAge() {
+        return studentService.getAverageAge();
     }
 }
