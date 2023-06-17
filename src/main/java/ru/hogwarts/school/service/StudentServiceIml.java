@@ -108,6 +108,23 @@ public class StudentServiceIml implements StudentService {
                 findAll().stream().mapToInt(Student::getAge).average().orElseThrow();
     }
 
+    @Override
+    public void getThreadStudents() {
+        List<String> students = getStudent().stream().map(Student::getName).toList();
+        new Thread(() -> {
+            System.out.println(students.get(0));
+            System.out.println(students.get(1));
+        }).start();
+        new Thread(() -> {
+            System.out.println(students.get(2));
+            System.out.println(students.get(3));
+        }).start();
+        new Thread(() -> {
+            System.out.println(students.get(4));
+            System.out.println(students.get(5));
+        }).start();
+    }
+
 }
 
 

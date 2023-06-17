@@ -34,4 +34,6 @@ public interface StudentService {
     List<String> findStudentBeginWithLetterA();
 
     double getAverageAge();
+
+    void getThreadStudents();
 }

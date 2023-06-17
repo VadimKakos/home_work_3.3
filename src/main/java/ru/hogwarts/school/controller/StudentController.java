@@ -98,7 +98,7 @@ public class StudentController {
 
     //Thread
     @GetMapping("/threadStudents")
-    public List<Student> getThreadStudents() {
-        return null;
+    public void getThreadStudents() {
+        studentService.getThreadStudents();
     }
 }
