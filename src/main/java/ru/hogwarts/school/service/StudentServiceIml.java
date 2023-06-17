@@ -97,9 +97,9 @@ public class StudentServiceIml implements StudentService {
 
     @Override
     public List<String> findStudentBeginWithLetterA() {
-         return studentRepository.
-                 findAll().stream().map(e->e.getName().toUpperCase()).
-                 filter(e -> e.charAt(0) == "А".charAt(0)).toList();
+        return studentRepository.
+                findAll().stream().map(e -> e.getName().toUpperCase()).
+                filter(e -> e.charAt(0) == "А".charAt(0)).toList();
     }
 
     @Override
@@ -111,10 +111,10 @@ public class StudentServiceIml implements StudentService {
     @Override
     public void getThreadStudents() {
         List<String> students = getStudent().stream().map(Student::getName).toList();
-        new Thread(() -> {
-            System.out.println(students.get(0));
-            System.out.println(students.get(1));
-        }).start();
+
+        System.out.println(students.get(0));
+        System.out.println(students.get(1));
+
         new Thread(() -> {
             System.out.println(students.get(2));
             System.out.println(students.get(3));
@@ -125,6 +125,27 @@ public class StudentServiceIml implements StudentService {
         }).start();
     }
 
+    @Override
+    public void getThreadStudents2() {
+        List<String> students = getStudent().stream().map(Student::getName).limit(6).toList();
+        getName(students.get(0));
+        getName(students.get(1));
+        new Thread(() -> {
+            getName(students.get(2));
+            getName(students.get(3));
+        }).start();
+        new Thread(() -> {
+            getName(students.get(4));
+            getName(students.get(5));
+        }).start();
+
+    }
+
+    private void getName(String name) {
+        synchronized (name) {
+            System.out.println(name);
+        }
+    }
 }
 
 

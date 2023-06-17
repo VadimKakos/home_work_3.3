@@ -101,4 +101,9 @@ public class StudentController {
     public void getThreadStudents() {
         studentService.getThreadStudents();
     }
+    //Thread2
+    @GetMapping("/threadStudents2")
+    public void getThreadStudents2() {
+        studentService.getThreadStudents2();
+    }
 }
