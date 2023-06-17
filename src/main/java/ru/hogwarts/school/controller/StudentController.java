@@ -89,9 +89,16 @@ public class StudentController {
     public List<String> findStudentBeginWithLetterA() {
         return studentService.findStudentBeginWithLetterA();
     }
+
     //averageAge streams
     @GetMapping("/averageAge")
     public Double getAverageAge() {
         return studentService.getAverageAge();
+    }
+
+    //Thread
+    @GetMapping("/threadStudents")
+    public List<Student> getThreadStudents() {
+        return null;
     }
 }

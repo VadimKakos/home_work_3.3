@@ -8,8 +8,7 @@ import java.util.stream.Stream;
 
 @Service
 public class PortServiceIml implements PortService {
-
-    @Value("8080")
+    @Value("${server.port}")
     private String port;
 
     @Override
