@@ -143,7 +143,7 @@ public class StudentServiceIml implements StudentService {
 
     private void getName(String name) {
         synchronized (name) {
-            System.out.println(name);
+            System.out.println(Thread.currentThread().getName() + " " + name);
         }
     }
 }
