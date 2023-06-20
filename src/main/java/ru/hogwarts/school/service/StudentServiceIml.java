@@ -14,7 +14,9 @@ import java.util.Optional;
 @Service
 public class StudentServiceIml implements StudentService {
 
+    private final Object flag = new Object();
     private final StudentRepository studentRepository;
+    private int count = 0;
 
     public StudentServiceIml(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -128,24 +130,28 @@ public class StudentServiceIml implements StudentService {
     @Override
     public void getThreadStudents2() {
         List<String> students = getStudent().stream().map(Student::getName).limit(6).toList();
-        getName(students.get(0));
-        getName(students.get(1));
+        getName(students.get(count), count);
+        getName(students.get(count), count);
         new Thread(() -> {
-            getName(students.get(2));
-            getName(students.get(3));
+            getName(students.get(count), count);
+            getName(students.get(count),count);
         }).start();
         new Thread(() -> {
-            getName(students.get(4));
-            getName(students.get(5));
+            getName(students.get(count), count);
+            getName(students.get(count), count);
         }).start();
 
     }
 
-    private void getName(String name) {
-        synchronized (name) {
-            System.out.println(Thread.currentThread().getName() + " " + name);
+    private void getName(String name, int count) {
+        synchronized (flag) {System.out.println(name);
+        }
+        this.count++;
+        if (this.count == 6) {
+            this.count = 0;
         }
     }
 }
+
 
 
